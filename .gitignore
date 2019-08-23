@@ -152,5 +152,11 @@ dmypy.json
 # End of https://www.gitignore.io/api/python,visualstudiocode,jupyternotebooks
 
 ### Ignore Data ###
-data
-
+data/raw/*
+!data/raw/download_link.txt
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/external/*
+!data/external/.gitkeep
