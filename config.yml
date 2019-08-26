@@ -6,10 +6,11 @@ HYPERPARAMETERS:
   BETA2: 0.999            # exponential decay rate for the second moment estimates 
   EPSILON: 10e-8          # exponential decay rate for the first moment estimates 
 
-  LEARNING_RATE: 10e-5    # rate of weight adjustment with respect to the loss gradient
+  LEARNING_RATE: 10e-2    # rate of weight adjustment with respect to the loss gradient
+  # LEARNING_RATE: 10e-5    # rate of weight adjustment with respect to the loss gradient
 
-  BATCH_SIZE: 4           # number of training examples per iteration
-  EPOCHS: 200             # number of epochs training is running for
+  BATCH_SIZE: 32          # number of training examples per iteration
+  EPOCHS: 50              # number of epochs training is running for
 
   PATIENCE: 10            # used for early stopping, if the loss doesn't
                           # improve after specified epochs it terminates

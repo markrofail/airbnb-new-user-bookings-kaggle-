@@ -15,34 +15,9 @@ else
 HAS_CONDA=True
 endif
 
-# variables for active network
-ACTIVE =				# indicates the active network
-REGNET = regnet 		# placeholder for Regnet
-MULTIMODAL = multimodal # placeholder for Multimodal
-
 #################################################################################
 # MODEL COMMANDS                                                                #
 #################################################################################
-.PHONY: regnet
-## Sets active network to regnet
-regnet:
-	$(eval ACTIVE=regnet)
-
-.PHONY: multimodal
-## Sets active network to multimodal
-multimodal:
-	$(eval ACTIVE=multimodal)
-
-.PHONY: active
-## prints active network
-active:
-	$(call check_defined, ACTIVE, active network)
-	if [ $(ACTIVE) = $(REGNET) ]; then \
-		echo "the active network is regnet"; \
-	elif [ $(ACTIVE) = $(MULTIMODAL) ]; then \
-		echo "the active network is multimodal"; \
-	fi
-
 .PHONY: data
 ## Make Dataset
 data:
@@ -58,37 +33,32 @@ clean_data data_clean:
 .PHONY: train learn
 ## Train The Model
 train learn:
-	$(call check_defined, ACTIVE, active network)
-ifeq ($(epochs),)
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).models.train_model
-else
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).models.train_model --epochs $(epochs)
-endif
+	$(PYTHON_INTERPRETER) -m src.models.train_model
 
 .PHONY: train_resume learn_resume
 ## Resume traininig The Model
 train_resume learn_resume:
-	$(call check_defined, ACTIVE, active network)
+	
 	$(call check_defined, epochs, epochs to run)
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).models.train_model --resume --epochs $(epochs)
+	$(PYTHON_INTERPRETER) -m src.models.train_model --resume --epochs $(epochs)
 
 .PHONY: predict
 ## Predict
 predict:
-	$(call check_defined, ACTIVE, active network)
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).models.predict_model -i -d
+	
+	$(PYTHON_INTERPRETER) -m src.models.predict_model -i -d
 
 .PHONY: predict_all
 ## Predict from test, valid and training datasets
 predict_all:
-	$(call check_defined, ACTIVE, active network)
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).models.predict_all
+	
+	$(PYTHON_INTERPRETER) -m src.models.predict_all
 
 .PHONY: predict_test
 ## Predict from test, valid and training datasets
 predict_test:
-	$(call check_defined, ACTIVE, active network)
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).models.predict_test
+	
+	$(PYTHON_INTERPRETER) -m src.models.predict_test
 
 .PHONY: refine
 ## Predict using Iterative Refinement
@@ -102,8 +72,8 @@ refine:
 .PHONY: graph
 ## Draw performance graphs
 graph:
-	$(call check_defined, ACTIVE, active network)
-	$(PYTHON_INTERPRETER) -m src.$(ACTIVE).visualization.visualize
+	
+	$(PYTHON_INTERPRETER) -m src.visualization.visualize
 
 .PHONY: check test
 ## Run nose tests

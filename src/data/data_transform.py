@@ -1,6 +1,5 @@
 import re
 
-import numpy as np
 import pandas as pd
 
 from src.helpers import paths
@@ -154,10 +153,11 @@ def session_aggregate(df):
     # session_actions.drop(columns=['action', 'action_type', 'action_detail'], inplace=True)
 
     # sum secs elapsed
-    summed_df = session_actions[['user_id', 'action_conc', 'secs_elapsed']]
+    session_actions['count'] = 1
+    summed_df = session_actions[['user_id', 'action_conc', 'count']]
     summed_df = summed_df.groupby(['user_id', 'action_conc'], as_index=False, sort=False)
-    summed_df = summed_df.agg({'secs_elapsed': 'sum'})
-    actions_data = summed_df.pivot(index='user_id', columns='action_conc', values='secs_elapsed')
+    summed_df = summed_df.agg({'count': 'sum'})
+    actions_data = summed_df.pivot(index='user_id', columns='action_conc', values='count')
     actions_data.fillna(0, inplace=True)
 
     # rename Columns
