@@ -3,13 +3,11 @@ import pandas as pd
 
 from src.helpers import paths
 
-import matplotlib.pyplot as plt
 
 def fix_date(df):
     # Correct Formating
     df['date_account_created'] = pd.to_datetime(df['date_account_created'])
     df['timestamp_first_active'] = pd.to_datetime(df['timestamp_first_active'])
-    df['date_first_booking'] = pd.to_datetime(df['date_first_booking'])
 
     # Remove Non essential data
     df.drop('date_first_booking', axis=1, inplace=True)
@@ -39,6 +37,17 @@ def compute_corr(df):
     # plt.show()
 
 
+def split_seesion(session_df, test_df):
+    # get test user ids
+    test_user_ids = list(set(test_df['id']))
+
+    # split session according to ids
+    session_test_df = session_df[session_df['user_id'].isin(test_user_ids)]
+    session_train_df = session_df[~session_df['user_id'].isin(test_user_ids)]
+
+    return session_test_df, session_train_df
+
+
 def clean_data(df):
     fix_date(df)
     fix_age(df)
@@ -46,19 +55,23 @@ def clean_data(df):
 
 
 def apply():
-    train_path = paths.raw.train_dataset()
-    train_data = pd.read_csv(train_path)
+    # ## Train Dataset ##
+    train_df = pd.read_csv(paths.raw.train_dataset())
+    clean_data(train_df)
+    train_df.to_csv(paths.interim.train_dataset(), index=False)
 
-    test_path = paths.raw.test_dataset()
-    test_data = pd.read_csv(test_path)
+    # ## Tests Dataset ##
+    test_df = pd.read_csv(paths.raw.test_dataset())
+    clean_data(test_df)
+    test_df.to_csv(paths.interim.test_dataset(), index=False)
 
-    clean_data(train_data)
-    compute_corr(train_data)
-    # train_data.to_csv(paths.interim.train_dataset())
-
-    # clean_data(test_data)
-    # test_data.to_csv(paths.interim.test_dataset())
+    # ## Split Session ##
+    session_df = pd.read_csv(paths.raw.session_csv())
+    session_test_df, session_train_df = split_seesion(session_df, test_df)
+    session_train_df.to_csv(paths.interim.session_train(), index=False)
+    session_test_df.to_csv(paths.interim.session_test(), index=False)
 
 
 if __name__ == "__main__":
+    print("# Performing Data Clean...")
     apply()

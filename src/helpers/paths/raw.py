@@ -9,3 +9,11 @@ def train_dataset():
 
 def test_dataset():
     return DATA_RAW_PATH.joinpath("test_users.csv")
+
+
+def session_csv():
+    return DATA_RAW_PATH.joinpath("sessions.csv")
+
+
+def test_labels():
+    return DATA_RAW_PATH.joinpath("sample_submission_NDF.csv")
