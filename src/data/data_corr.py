@@ -45,6 +45,7 @@ def one():
     to_remove.remove('country_destination_other')
     return to_remove
 
+
 def apply():
     df = pd.read_csv(paths.processed.test_dataset())
 
