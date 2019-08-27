@@ -3,18 +3,28 @@ Airbnb New User Bookings KAGGLE
 
 predict in which country a new user will make his or her first booking.
 
+Results
+------------
+- Neural Network
+    - 40% Accuracy Kaggle Tests
+    - 60% Accuracy Local Tests
+
+- Random Forests
+    - XX% Accuracy Kaggle Tests
+    - XX% Accuracy Local Tests
+
 How to use
 ------------
-to install requirements
+- install requirements
 `pip install -r requirements.txt`
 
-to generate data
+- generate data
 `python -m src.data.data_clean && python -m src.data.data_transform`
 
-to use NN model
+- use NN model
 `python -m src.models.train_model`
 
-to use Random Forests model
+- use Random Forests model
 `python -m src.models.decision_tree`
 
 Project Organization
