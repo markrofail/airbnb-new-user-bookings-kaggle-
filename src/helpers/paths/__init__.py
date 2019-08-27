@@ -28,7 +28,7 @@ __all__ = [
     'raw',
     'interim',
     'processed',
-    'models'
-    'config'
-    'results'
+    'models',
+    'config',
+    'results',
 ]

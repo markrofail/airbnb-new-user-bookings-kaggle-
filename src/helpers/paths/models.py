@@ -9,3 +9,7 @@ def _2048_1024_512(file=False):
     if file:
         path = path.joinpath("saved_model.pb")
     return path
+
+def forest(file=False):
+    path = MODELS_PATH.joinpath('forest.pkl')
+    return path
