@@ -30,7 +30,7 @@ VERBOSE = config['ENVIROMENT_CONFIG']['VERBOSE']
 SAVE_EVERY = int(config['ENVIROMENT_CONFIG']['SAVE_EVERY'])
 
 
-def load_data():
+def load_data(train_ids=False, test_ids=False):
     X_train = pd.read_csv(paths.processed.train_dataset())
     Y_train = pd.read_csv(paths.processed.train_labels())
     X_train.drop(columns='id', inplace=True, errors='ignore')
@@ -40,11 +40,14 @@ def load_data():
 
     X_test = pd.read_csv(paths.processed.test_dataset())
     Y_test = pd.read_csv(paths.processed.test_labels())
+    id_list = X_test.id.values
     X_test.drop(columns='id', inplace=True, errors='ignore')
     X_test.drop(columns='user_id', inplace=True, errors='ignore')
     Y_test.drop(columns='id', inplace=True, errors='ignore')
     Y_test.drop(columns='user_id', inplace=True, errors='ignore')
 
+    if test_ids:
+        return X_train, Y_train, X_test, Y_test, id_list
     return X_train, Y_train, X_test, Y_test
 
 
