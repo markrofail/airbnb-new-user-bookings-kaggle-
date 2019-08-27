@@ -7,11 +7,13 @@ Results
 ------------
 - Random Forests
     - 85.2% Accuracy Kaggle Tests
+
 ![Forest Score](./results/forest_score.png)
 
 - Neural Network
     - 40% Accuracy Kaggle Tests
     - 60% Accuracy Local Tests
+
 ![NN Score](./results/nn_score.png)
 
 
